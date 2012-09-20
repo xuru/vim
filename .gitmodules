@@ -40,3 +40,6 @@
 [submodule "bundle/vim-chef"]
 	path = bundle/vim-chef
 	url = git://github.com/t9md/vim-chef.git
+[submodule "bundle/vim-flake8"]
+	path = bundle/vim-flake8
+	url = git://github.com/nvie/vim-flake8.git
