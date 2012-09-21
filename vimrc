@@ -13,6 +13,11 @@ filetype on
 filetype plugin on
 filetype indent on
 
+let g:Powerline_symbols = 'fancy'
+call Pl#Theme#InsertSegment('ws_marker', 'after', 'lineinfo')
+
+nmap <F8> :TagbarToggle<CR>
+
 " Tabstops are 4 spaces
 set tabstop=4
 set shiftwidth=4
@@ -21,11 +26,19 @@ set expandtab
 set autoindent
 
 syntax on
+set background=dark						" I use dark background
+:colorscheme zenburn
 
 " GUI options (only in effect when running in a GUI).
 if has("gui_running")
     set guifont=Liberation_Mono:h11
     set enc=utf-8
+
+    " Set Gui Options
+    set guioptions=a
+
+    " Set up the gui cursor to look nice
+    set guicursor=n-v-c:block-Cursor-blinkon0,ve:ver35-Cursor,o:hor50-Cursor,i-ci:ver25-Cursor,r-cr:hor20-Cursor,sm:block-Cursor-blinkwait175-blinkoff150-blinkon175
 
     " Add MacVim shift-movement
     let macvim_hig_shift_movement = 1
@@ -35,13 +48,11 @@ if has("gui_running")
     
     " Anti-aliasing is niiiice
     set antialias
-else
-    set term=ansi
 endif
 
 
 " set 80 caracter line
-set colorcolumn=80
+"set colorcolumn=80
 " set the search scan to wrap lines
 set wrapscan
 
@@ -77,9 +88,6 @@ syntax on
 " Hide the mouse pointer while typing
 set mousehide
 
-" Set up the gui cursor to look nice
-set guicursor=n-v-c:block-Cursor-blinkon0,ve:ver35-Cursor,o:hor50-Cursor,i-ci:ver25-Cursor,r-cr:hor20-Cursor,sm:block-Cursor-blinkwait175-blinkoff150-blinkon175
-
 " When the page starts to scroll, keep the cursor 8 lines from the top and 8
 " lines from the bottom
 set scrolloff=8
@@ -95,9 +103,6 @@ set showfulltag
 
 " Set the textwidth to be 80 chars
 set textwidth=80
-
-" Set Gui Options
-set guioptions=acg
 
 " Enable search highlighting
 set hlsearch
@@ -119,6 +124,10 @@ nmap <silent> <F3> :call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<
 " System default for mappings is now the "," charater
 let mapleader = ","
 
+" Jump commands...
+map <F3> g
+map <F4> 
+
 "----------------
 " Command-T stuff
 " ----------------
@@ -126,16 +135,6 @@ noremap <leader>o <Esc>:CommandT<CR>
 noremap <leader>O <Esc>:CommandTFlush<CR>
 noremap <leader>m <Esc>:CommandTBuffer<CR>
 set wildignore=*.pyc,*~
-
-"-----------------
-" Solarized stuff
-" ----------------
-set background=dark
-let g:solarized_termtrans=1
-let g:solarized_termcolors=256
-let g:solarized_contrast="high"
-let g:solarized_visibility="high"
-colorscheme solarized
 
 "-----------------------
 " NERDTree configuration
@@ -149,11 +148,6 @@ nmap <silent> <F7> :NERDTreeToggle<CR>
 let NERDTreeIgnore=['\env','\.vim$', '\~$', '\.pyc$', '\.swp$', '\.egg-info$', '^dist$', '^build$']
 let NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\~$']
 let NERDTreeHightlightCursorline=1
-
-"-------------------
-" PEP8 plugin stuff
-" ------------------
-let g:pep8_map='<leader>8'
 
 "-------------------
 " Chef
@@ -171,3 +165,19 @@ function! s:SetupChef()
     nnoremap <buffer> <silent> <M-f>      :<C-u>ChefFindAnySplit<CR>
 endfunction
 
+"-------------------
+" Autocommands (all)
+" ------------------
+if has("autocmd")
+    " In all files, try to jump back to the last spot cursor was in before exiting
+    au BufReadPost *
+        \ if line("'\"") > 0 && line("'\"") <= line("$") |
+        \   exe "normal g`\"" |
+        \ endif
+    " don't fold vim files
+    autocmd FileType vim set nofoldenable
+
+    " Re-load vimrc file when you save
+    au BufWritePost ~/.vimrc :source ~/.vimrc
+    au BufWritePost ~/.gvimrc :source ~/.gvimrc
+endif
