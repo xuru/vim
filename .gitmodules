@@ -43,3 +43,6 @@
 [submodule "bundle/vim-flake8"]
 	path = bundle/vim-flake8
 	url = git://github.com/nvie/vim-flake8.git
+[submodule "bundle/vim-powerline"]
+	path = bundle/vim-powerline
+	url = git://github.com/Lokaltog/vim-powerline.git
