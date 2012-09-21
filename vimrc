@@ -20,10 +20,25 @@ set softtabstop=4
 set expandtab
 set autoindent
 
-" Set guifont
-set guifont=Monospace\ 10
-" show line numbers on the site
-" set number
+syntax on
+
+" GUI options (only in effect when running in a GUI).
+if has("gui_running")
+    set guifont=Liberation_Mono:h11
+    set enc=utf-8
+
+    " Add MacVim shift-movement
+    let macvim_hig_shift_movement = 1
+
+    " A itzy-bitzy amount of transparency
+    set transparency=4
+    
+    " Anti-aliasing is niiiice
+    set antialias
+else
+    set term=ansi
+endif
+
 
 " set 80 caracter line
 set colorcolumn=80
@@ -139,3 +154,20 @@ let NERDTreeHightlightCursorline=1
 " PEP8 plugin stuff
 " ------------------
 let g:pep8_map='<leader>8'
+
+"-------------------
+" Chef
+" ------------------
+au BufNewFile,BufRead */*cookbooks/*  call s:SetupChef()
+function! s:SetupChef()
+    " Mouse:
+    " Left mouse click to GO!
+    nnoremap <buffer> <silent> <2-LeftMouse> :<C-u>ChefFindAny<CR>
+    " Right mouse click to Back!
+    nnoremap <buffer> <silent> <RightMouse> <C-o>
+
+    " Keyboard:
+    nnoremap <buffer> <silent> <M-a>      :<C-u>ChefFindAny<CR>
+    nnoremap <buffer> <silent> <M-f>      :<C-u>ChefFindAnySplit<CR>
+endfunction
+
