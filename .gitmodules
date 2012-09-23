@@ -49,3 +49,6 @@
 [submodule "bundle/chef.vim"]
 	path = bundle/chef.vim
 	url = git://github.com/vim-scripts/chef.vim.git
+[submodule "bundle/zenburn"]
+	path = bundle/zenburn
+	url = git://github.com/jnurmine/Zenburn.git
