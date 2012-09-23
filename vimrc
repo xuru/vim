@@ -3,10 +3,11 @@
 "-----------------------------------------------------------------------------
 
 " Get pathogen up and running
-filetype off 
-call pathogen#infect()
+call pathogen#infect('~/.vim/bundle')
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
+
+call Pl#Theme#InsertSegment('ws_marker', 'after', 'lineinfo')
 
 " Set filetype stuff to on
 filetype on
@@ -14,7 +15,6 @@ filetype plugin on
 filetype indent on
 
 let g:Powerline_symbols = 'fancy'
-call Pl#Theme#InsertSegment('ws_marker', 'after', 'lineinfo')
 
 nmap <F8> :TagbarToggle<CR>
 
@@ -28,11 +28,11 @@ set autoindent
 syntax on
 set background=dark						" I use dark background
 :colorscheme zenburn
+set enc=utf-8
 
 " GUI options (only in effect when running in a GUI).
 if has("gui_running")
     set guifont=Liberation_Mono:h11
-    set enc=utf-8
 
     " Set Gui Options
     set guioptions=a
@@ -178,6 +178,6 @@ if has("autocmd")
     autocmd FileType vim set nofoldenable
 
     " Re-load vimrc file when you save
-    au BufWritePost ~/.vimrc :source ~/.vimrc
-    au BufWritePost ~/.gvimrc :source ~/.gvimrc
+    "au BufWritePost ~/.vimrc :source ~/.vimrc
+    "au BufWritePost ~/.gvimrc :source ~/.gvimrc
 endif
