@@ -6,14 +6,6 @@
 " map <F2> to toggle NERDTree window
 " map <F7> to run flake8 when in python code
 
-set nocompatible
-
-" Get pathogen up and running
-"call pathogen#infect('~/.vim/bundle')
-"call pathogen#runtime_append_all_bundles()
-"call pathogen#helptags()
-
-
 " Setting up Vundle - the vim plugin bundler
 let iCanHazVundle=1
 let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
@@ -25,8 +17,7 @@ if !filereadable(vundle_readme)
     let iCanHazVundle=0
 endif
 
-
-" required for vundle
+set nocompatible
 filetype off
 
 set rtp+=~/.vim/bundle/vundle/
@@ -38,8 +29,7 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " Bundles from GitHub repos:
-
-" Git integration
+Bundle 'wincent/Command-T'
 Bundle 'tpope/vim-fugitive'
 Bundle 'Raimondi/delimitMate'
 Bundle 'docunext/closetag.vim'
@@ -51,6 +41,9 @@ Bundle 'nvie/vim-flake8'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'jnurmine/Zenburn'
 Bundle 't9md/vim-chef'
+Bundle 'finder/rope-vim'
+Bundle 'mileszs/ack.vim'
+Bundle 'reinh/vim-makegreen'
 
 " Python and PHP Debugger
 "Bundle 'fisadev/vim-debug.vim'
@@ -72,6 +65,7 @@ Bundle 'mattn/zencoding-vim'
 " Autocompletition
 Bundle 'AutoComplPop'
 
+filetype plugin indent on     " required!
 
 " Installing plugins the first time
 if iCanHazVundle == 0
@@ -80,13 +74,7 @@ if iCanHazVundle == 0
     :BundleInstall
 endif
 
-
 call Pl#Theme#InsertSegment('ws_marker', 'after', 'lineinfo')
-
-" Set filetype stuff to on
-filetype on
-filetype plugin on
-filetype indent on
 
 let g:Powerline_symbols = 'fancy'
 
@@ -105,13 +93,14 @@ autocmd FileType javascript setlocal shiftwidth=2 tabstop=2
 autocmd FileType ruby setlocal shiftwidth=2 tabstop=2
 
 syntax on
-set background=dark						" I use dark background
-:colorscheme zenburn
 set enc=utf-8
+colorscheme delek
 
 " GUI options (only in effect when running in a GUI).
 if has("gui_running")
     set guifont=Liberation_Mono:h11
+    set background=dark						" I use dark background
+    colorscheme zenburn
 
     " Set Gui Options
     set guioptions=a
@@ -212,6 +201,8 @@ map <leader>k k
 map <leader>h h
 map <leader>l l
 
+nmap <leader>a <ESC>:Ack!
+
 " toggle Tagbar display
 nmap <F4> :TagbarToggle<CR>
 
@@ -228,6 +219,8 @@ imap <C-S-Right> <ESC>:tabn<CR>
 map <C-S-Left> :tabp<CR>
 imap <C-S-Left> <ESC>:tabp<CR>
 
+map <leader>d :RopeGotoDefinition<CR>
+map <leader>r :RopeRename<CR>
 
 " automatically close autocompletition window
 autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
@@ -361,6 +354,10 @@ map <F3> :NERDTreeToggle<CR>
 let NERDTreeIgnore=['\env','\.vim$', '\~$', '\.pyc$', '\.swp$', '\.egg-info$', '^dist$', '^build$']
 let NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\~$']
 let NERDTreeHightlightCursorline=1
+
+"folding...
+set foldmethod=indent
+set foldlevel=99
 
 "-------------------
 " Chef
