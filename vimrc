@@ -1,6 +1,10 @@
 "-----------------------------------------------------------------------------
 " Global Stuff
 "-----------------------------------------------------------------------------
+" 
+" Keys...
+" map <F2> to toggle NERDTree window
+" map <F7> to run flake8 when in python code
 
 " Get pathogen up and running
 call pathogen#infect('~/.vim/bundle')
@@ -15,8 +19,6 @@ filetype plugin on
 filetype indent on
 
 let g:Powerline_symbols = 'fancy'
-
-nmap <F8> :TagbarToggle<CR>
 
 " Tabstops are 4 spaces
 set tabstop=4
@@ -118,15 +120,17 @@ set autoread
 
 set grepprg=grep\ -nH\ $*
 
-" Toggle fullscreen mode
-nmap <silent> <F3> :call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
-
 " System default for mappings is now the "," charater
 let mapleader = ","
 
 " Jump commands...
 map <F3> g
 map <F4> 
+
+map <leader>j j
+map <leader>k k
+map <leader>h h
+map <leader>l l
 
 "----------------
 " Command-T stuff
@@ -143,8 +147,8 @@ set wildignore=*.pyc,*~
 " Increase window size to 35 columns
 let NERDTreeWinSize=35
 
-" map <F7> to toggle NERDTree window
-nmap <silent> <F7> :NERDTreeToggle<CR>
+" map <F2> to toggle NERDTree window
+nmap <silent> <F2> :NERDTreeToggle<CR>
 let NERDTreeIgnore=['\env','\.vim$', '\~$', '\.pyc$', '\.swp$', '\.egg-info$', '^dist$', '^build$']
 let NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\~$']
 let NERDTreeHightlightCursorline=1
