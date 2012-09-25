@@ -6,6 +6,11 @@
 " map <F2> to toggle NERDTree window
 " map <F7> to run flake8 when in python code
 
+" Some settings that need to be set before we declare our bundles
+set nocompatible
+filetype off
+
+
 " Setting up Vundle - the vim plugin bundler
 let iCanHazVundle=1
 let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
@@ -17,15 +22,10 @@ if !filereadable(vundle_readme)
     let iCanHazVundle=0
 endif
 
-set nocompatible
-filetype off
-
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
-
 " let Vundle manage Vundle
-" required!
 Bundle 'gmarik/vundle'
 
 " Bundles from GitHub repos:
@@ -61,9 +61,7 @@ Bundle 'mattn/zencoding-vim'
 "Bundle 'tpope/vim-surround'
 
 " Bundles from vim-scripts
-"
-" Autocompletition
-Bundle 'AutoComplPop'
+"Bundle 'AutoComplPop'  " Autocompletition
 
 filetype plugin indent on     " required!
 
@@ -74,8 +72,8 @@ if iCanHazVundle == 0
     :BundleInstall
 endif
 
+" Powerline...
 call Pl#Theme#InsertSegment('ws_marker', 'after', 'lineinfo')
-
 let g:Powerline_symbols = 'fancy'
 
 " Tabstops are 4 spaces
@@ -84,7 +82,10 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 set autoindent
-
+set showmatch       "briefly jump to other matching bracket
+set shiftround      "round to multiples of shiftwidth
+set history=200
+set undolevels=1000
 
 " tablength exceptions
 autocmd FileType html setlocal shiftwidth=2 tabstop=2
@@ -93,8 +94,9 @@ autocmd FileType javascript setlocal shiftwidth=2 tabstop=2
 autocmd FileType ruby setlocal shiftwidth=2 tabstop=2
 
 syntax on
-set enc=utf-8
-colorscheme delek
+set encoding=utf-8
+set background=dark
+colorscheme desert
 
 " GUI options (only in effect when running in a GUI).
 if has("gui_running")
@@ -108,14 +110,36 @@ if has("gui_running")
     " Set up the gui cursor to look nice
     set guicursor=n-v-c:block-Cursor-blinkon0,ve:ver35-Cursor,o:hor50-Cursor,i-ci:ver25-Cursor,r-cr:hor20-Cursor,sm:block-Cursor-blinkwait175-blinkoff150-blinkon175
 
-    " Add MacVim shift-movement
-    let macvim_hig_shift_movement = 1
+    if has("gui_macvim")
+        " Map Cmd+<n> to move to tab <n>.
+        map <D-1> :tabn 1<CR>
+        map <D-2> :tabn 2<CR>
+        map <D-3> :tabn 3<CR>
+        map <D-4> :tabn 4<CR>
+        map <D-5> :tabn 5<CR>
+        map <D-6> :tabn 6<CR>
+        map <D-7> :tabn 7<CR>
+        map <D-8> :tabn 8<CR>
+        map <D-9> :tabn 9<CR>
+        map! <D-1> <C-O>:tabn 1<CR>
+        map! <D-2> <C-O>:tabn 2<CR>
+        map! <D-3> <C-O>:tabn 3<CR>
+        map! <D-4> <C-O>:tabn 4<CR>
+        map! <D-5> <C-O>:tabn 5<CR>
+        map! <D-6> <C-O>:tabn 6<CR>
+        map! <D-7> <C-O>:tabn 7<CR>
+        map! <D-8> <C-O>:tabn 8<CR>
+        map! <D-9> <C-O>:tabn 9<CR>
 
-    " A itzy-bitzy amount of transparency
-    set transparency=4
-    
-    " Anti-aliasing is niiiice
-    set antialias
+        " Add MacVim shift-movement
+        let macvim_hig_shift_movement = 1
+
+        " A itzy-bitzy amount of transparency
+        set transparency=4
+        
+        " Anti-aliasing is niiiice
+        set antialias
+    endif
 endif
 
 
@@ -358,6 +382,7 @@ let NERDTreeHightlightCursorline=1
 "folding...
 set foldmethod=indent
 set foldlevel=99
+set foldenable
 
 "-------------------
 " Chef
